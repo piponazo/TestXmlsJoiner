@@ -1,0 +1,34 @@
+#---------------------------------------
+# Qt STUFF
+SET(CMAKE_INCLUDE_CURRENT_DIR ON)   # Find includes in corresponding build directories
+SET(CMAKE_AUTOMOC ON)
+FIND_PACKAGE(Qt4 4.8.0 REQUIRED QtCore QtTest)
+
+IF(NOT QT4_FOUND)
+   MESSAGE(FATAL_ERROR "Qt4 version has not been found on your system")
+ENDIF()
+
+IF (BUILD_SHARED_LIBS)
+   ADD_DEFINITIONS(-DQT_SHARED)
+ELSE()
+   ADD_DEFINITIONS(-DQT_STATIC)
+ENDIF()
+
+IF (${CMAKE_BUILD_TYPE} STREQUAL "Release")
+   ADD_DEFINITIONS(-DQT_NO_DEBUG_OUTPUT)
+   ADD_DEFINITIONS(-DQT_NO_WARNING_OUTPUT)
+ENDIF()
+
+#---------------------------------------
+
+FIND_PACKAGE(GTest)
+FIND_LIBRARY(ARGTABLE argtable2 PATHS $ENV{WINLIBS_ROOT}/lib)
+
+IF(${ARGTABLE} STREQUAL ARGTABLE-NOTFOUND)
+   MESSAGE(FATAL_ERROR "argtable2 library didn't found")
+ENDIF()
+
+IF(NOT DEFINED GTEST_FOUND)
+   SET(BUILD_GTESTS OFF)
+   MESSAGE(FATAL_ERROR "Google test could not be found.")
+ENDIF()
