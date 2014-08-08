@@ -1,12 +1,9 @@
 /*!
  *      @file  XmlJoiner.cpp
- *    @author  Luis Díaz Más (LDM), ldiaz@catec.aero
+ *    @author  Luis Díaz Más (LDM), piponazo@gmail.com
  *
  *  @internal
  *    Created  08/07/2014
- *   Compiler  gcc/g++
- *    Company  FADA-CATEC
- *  Copyright  Copyright (c) 2014, FADA-CATEC
  */
 
 #include "XmlJoiner.h"

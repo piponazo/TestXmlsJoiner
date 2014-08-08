@@ -21,14 +21,9 @@ ENDIF()
 
 #---------------------------------------
 
-FIND_PACKAGE(GTest)
+FIND_PACKAGE(GTest REQUIRED)
 FIND_LIBRARY(ARGTABLE argtable2 PATHS $ENV{WINLIBS_ROOT}/lib)
 
 IF(${ARGTABLE} STREQUAL ARGTABLE-NOTFOUND)
    MESSAGE(FATAL_ERROR "argtable2 library didn't found")
-ENDIF()
-
-IF(NOT DEFINED GTEST_FOUND)
-   SET(BUILD_GTESTS OFF)
-   MESSAGE(FATAL_ERROR "Google test could not be found.")
 ENDIF()
