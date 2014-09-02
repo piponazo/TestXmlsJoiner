@@ -12,11 +12,15 @@ ELSEIF(BUILD_TESTS)
 
    ADD_EXECUTABLE(tests ${SRCS})
 
-   ADD_CUSTOM_TARGET(tests_xml COMMAND tests --xml --gtest_output=xml
+   ADD_CUSTOM_TARGET(tests_xml COMMAND tests --xml --gtest_output=xml=xml:tests.xml
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
    IF(ENABLE_COVERAGE)
       SETUP_TARGET_FOR_COVERAGE(coverageHtml tests coverage)
+   ENDIF()
+
+   IF(ENABLE_COVERAGE_XML)
+      SETUP_TARGET_FOR_COVERAGE(coverageXml tests coverageXml --gtest_output=xml:tests.xml)
    ENDIF()
 
 ENDIF()
