@@ -121,6 +121,7 @@ void XmlJoiner::outputXmlHeader(QXmlStreamWriter &writer)
       errors += testSuite->_errors;
    }
 
+   writer.writeAttribute("name", "AllTests");
    writer.writeAttribute("tests", QString::number(tests));
    writer.writeAttribute("failures", QString::number(failures));
    writer.writeAttribute("errors", QString::number(errors));
@@ -141,6 +142,7 @@ void XmlJoiner::outputXmlElements(QXmlStreamWriter &writer)
          writer.writeStartElement("testcase");
          writer.writeAttribute("name", testCase->_name);
          writer.writeAttribute("status", testCase->_valid);
+         writer.writeAttribute("classname", testSuite->_name);
          writer.writeEndElement();
       }
 

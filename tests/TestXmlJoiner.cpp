@@ -16,7 +16,6 @@ protected:
 
    virtual void SetUp()
    {
-      /// \todo add unique_ptr
       _joiner = new XmlJoiner();
    }
 

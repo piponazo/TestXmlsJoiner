@@ -29,10 +29,10 @@ OPTION(BUILD_TESTS         "Build unitary & integration tests with gtest"       
 #   Code coverage
 # ----------------------------------------------------------------------------
 IF (ENABLE_COVERAGE)
-   INCLUDE(cmake_stuff/code_coverage.cmake REQUIRED)
+   INCLUDE(cmake/code_coverage.cmake REQUIRED)
 ENDIF()
 IF (ENABLE_COVERAGE_XML)
-   INCLUDE(cmake_stuff/code_coverage_xml.cmake REQUIRED)
+   INCLUDE(cmake/code_coverage_xml.cmake REQUIRED)
 ENDIF()
 
 IF (ENABLE_COVERAGE OR ENABLE_COVERAGE_XML)
@@ -47,5 +47,7 @@ ENDIF()
 
 SET(CMAKE_INCLUDE_DIRS_CONFIGCMAKE ${CMAKE_INSTALL_PREFIX}/include      CACHE PATH "Output directory for headers")
 SET(CMAKE_LIB_DIRS_CONFIGCMAKE     ${CMAKE_INSTALL_PREFIX}/lib          CACHE PATH "Output directory for libraries")
-SET(EXECUTABLE_OUTPUT_PATH         ${PROJECT_BINARY_DIR}/bin)
-SET(LIBRARY_OUTPUT_PATH            ${PROJECT_BINARY_DIR}/lib)
+
+SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY       ${PROJECT_BINARY_DIR}/bin)
+SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY       ${PROJECT_BINARY_DIR}/lib)
+SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY       ${PROJECT_BINARY_DIR}/lib)
