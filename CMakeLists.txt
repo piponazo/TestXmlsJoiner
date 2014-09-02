@@ -5,6 +5,9 @@ INCLUDE(cmake/versions.cmake REQUIRED)
 INCLUDE(cmake/compileroptions.cmake REQUIRED)
 INCLUDE(cmake/options.cmake REQUIRED)
 INCLUDE(cmake/findDependencies.cmake REQUIRED)
+INCLUDE(cmake/generateDoc.cmake REQUIRED)
+GENERATE_DOCUMENTATION(${PROJECT_SOURCE_DIR}/cmake/dox.in)
+
 INCLUDE(cmake/buildFiles.cmake REQUIRED)
 
 ADD_SUBDIRECTORY(src)
