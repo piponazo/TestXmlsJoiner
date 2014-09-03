@@ -23,6 +23,7 @@ protected:
 
    virtual void TearDown()
    {
+      delete _joiner;
    }
 };
 
