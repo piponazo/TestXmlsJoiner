@@ -9,6 +9,8 @@
 #include "XmlJoiner.h"
 #include <gtest/gtest.h>
 
+extern struct arg_str *argPath;
+
 class TestXmlJoiner : public ::testing::Test
 {
 protected:
@@ -21,7 +23,6 @@ protected:
 
    virtual void TearDown()
    {
-      delete _joiner;
    }
 };
 
