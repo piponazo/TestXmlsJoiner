@@ -37,3 +37,9 @@ TEST_F(TestXmlJoiner, shouldProcessExistingFolderWithXmls)
 {
    ASSERT_NO_THROW(_joiner->processFolder(argPath->sval[0]));
 }
+
+TEST_F(TestXmlJoiner, shouldWriteOutputFile)
+{
+   ASSERT_NO_THROW(_joiner->processFolder(argPath->sval[0]));
+   ASSERT_NO_THROW(_joiner->writeOutput("prueba"));
+}
