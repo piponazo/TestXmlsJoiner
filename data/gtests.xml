@@ -30,5 +30,10 @@
     <testcase name="shouldPerformOperationFool23" status="run" time="0.002" classname="TestSuite3" />
     <testcase name="shouldPerformOperationFool24" status="run" time="0.002" classname="TestSuite3" />
     <testcase name="shouldPerformOperationFool25" status="run" time="0.001" classname="TestSuite3" />
+    <testcase name="shouldPerformOperationFool100" status="run" time="0.001" classname="TestSuite3" >
+      <failure message="Value of: 3&#x0A;Expected: 1" type=""><![CDATA[/home/ldiaz/programming/TestXmlsJoiner/tests/TestXmlJoiner.cpp:49
+Value of: 3
+Expected: 1]]></failure>
+    </testcase>
   </testsuite>
 </testsuites>

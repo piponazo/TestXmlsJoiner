@@ -63,7 +63,6 @@ void XmlJoiner::processFile(const QString absolutePath)
    {
       throw std::runtime_error("Error parsing the xml file " + absolutePath.toStdString());
    }
-   file.close();
 }
 
 void XmlJoiner::processTestSuiteAttrs(const QXmlStreamAttributes attrs)
