@@ -24,7 +24,7 @@ ELSEIF(BUILD_TESTS)
     ENDIF()
 
     IF(ENABLE_COVERAGE_XML)
-        SETUP_TARGET_FOR_COVERAGE(coverageXml tests coverageXml --gtest_output=xml:tests.xml
+		SETUP_TARGET_FOR_COVERAGE_XML(coverageXml tests coverageXml --gtest_output=xml:tests.xml
         --path $ENV{XML_JOINER_PATH}
         )
     ENDIF()
