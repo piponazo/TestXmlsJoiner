@@ -7,7 +7,9 @@
  */
 
 #include "XmlJoiner.h"
+
 #include <gtest/gtest.h>
+#include <argtable2.h>
 
 extern struct arg_str *argPath;
 
@@ -29,4 +31,9 @@ protected:
 
 TEST_F(TestXmlJoiner, shouldCreateAndDestroyObjectInstance)
 {
+}
+
+TEST_F(TestXmlJoiner, shouldProcessExistingFolderWithXmls)
+{
+   ASSERT_NO_THROW(_joiner->processFolder(argPath->sval[0]));
 }
