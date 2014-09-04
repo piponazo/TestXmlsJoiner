@@ -1,0 +1,9 @@
+{
+   Qt5QFileConstructor
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.2
+   ...
+   fun:_ZN5QFileC1ERK7QString
+   ...
+}

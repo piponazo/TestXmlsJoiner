@@ -12,9 +12,9 @@
 #include <QDebug>
 #include <stdexcept>
 
-XmlJoiner::~XmlJoiner ()
+XmlJoiner::~XmlJoiner()
 {
-   foreach (auto testSuite, _suites)
+   foreach(auto testSuite, _suites)
    {
       delete testSuite;
    }
@@ -23,9 +23,9 @@ XmlJoiner::~XmlJoiner ()
 void XmlJoiner::processFolder(const QString folder)
 {
    QDir xmlDir(folder);
-   QStringList extensions ("*.xml");
+   QStringList extensions("*.xml");
    foreach(const QString &file, xmlDir.entryList(extensions,
-            QDir::Files | QDir::NoDotAndDotDot, QDir::Name))
+           QDir::Files | QDir::NoDotAndDotDot, QDir::Name))
    {
       processFile(xmlDir.absoluteFilePath(file));
    }
@@ -33,31 +33,37 @@ void XmlJoiner::processFolder(const QString folder)
 
 void XmlJoiner::processFile(const QString absolutePath)
 {
-   QFile file (absolutePath);
-   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+   QFile file(absolutePath);
+
+   if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+   {
       throw std::runtime_error("Error opening file " + absolutePath.toStdString());
    }
 
    QXmlStreamReader xml(&file);
+
    while(!xml.atEnd() && !xml.hasError())
    {
       QXmlStreamReader::TokenType token = xml.readNext();
+
       if(token == QXmlStreamReader::StartElement)
       {
-         if (xml.name() == "testsuite")
+         if(xml.name() == "testsuite")
          {
             processTestSuiteAttrs(xml.attributes());
          }
-         else if (xml.name() == "testcase")
+         else if(xml.name() == "testcase")
          {
             processTestCaseAttrs(xml.attributes());
          }
       }
    }
+
    if(xml.hasError())
    {
       throw std::runtime_error("Error parsing the xml file " + absolutePath.toStdString());
    }
+   file.close();
 }
 
 void XmlJoiner::processTestSuiteAttrs(const QXmlStreamAttributes attrs)
@@ -72,16 +78,17 @@ void XmlJoiner::processTestSuiteAttrs(const QXmlStreamAttributes attrs)
 void XmlJoiner::processTestCaseAttrs(const QXmlStreamAttributes attrs)
 {
    QString valid("run");
-   if (attrs.hasAttribute("status")) // google tests case
+
+   if(attrs.hasAttribute("status"))  // google tests case
    {
-      if (attrs.value("status") != "run")
+      if(attrs.value("status") != "run")
       {
          valid = attrs.value("status").toString();
       }
    }
-   else if (attrs.hasAttribute("result")) // qt tests case
+   else if(attrs.hasAttribute("result"))  // qt tests case
    {
-      if (attrs.value("result") != "pass")
+      if(attrs.value("result") != "pass")
       {
          valid = attrs.value("result").toString();
       }
@@ -94,12 +101,15 @@ void XmlJoiner::processTestCaseAttrs(const QXmlStreamAttributes attrs)
 
 void XmlJoiner::writeOutput(const QString pathFile)
 {
-   QFile outFile (pathFile);
-   if (!outFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+   QFile outFile(pathFile);
+
+   if(!outFile.open(QIODevice::WriteOnly | QIODevice::Text))
+   {
       qDebug() << "Error opening output file for writing";
       /// \todo throw exception and delete debug message
       exit(-1);
    }
+
    QXmlStreamWriter xmlOut(&outFile);
    outputXmlHeader(xmlOut);
    outputXmlElements(xmlOut);
@@ -114,7 +124,7 @@ void XmlJoiner::outputXmlHeader(QXmlStreamWriter &writer)
 
    // Gather information about all the tests
    int tests=0, failures=0, errors=0;
-   foreach (const auto testSuite, _suites)
+   foreach(const auto testSuite, _suites)
    {
       tests += testSuite->_tests;
       failures += testSuite->_failures;
@@ -129,7 +139,7 @@ void XmlJoiner::outputXmlHeader(QXmlStreamWriter &writer)
 
 void XmlJoiner::outputXmlElements(QXmlStreamWriter &writer)
 {
-   foreach (const auto testSuite, _suites)
+   foreach(const auto testSuite, _suites)
    {
       writer.writeStartElement("testsuite");
       writer.writeAttribute("name", testSuite->_name);
@@ -137,7 +147,7 @@ void XmlJoiner::outputXmlElements(QXmlStreamWriter &writer)
       writer.writeAttribute("failures", QString::number(testSuite->_failures));
       writer.writeAttribute("errors", QString::number(testSuite->_errors));
 
-      foreach (const auto testCase, testSuite->_cases)
+      foreach(const auto testCase, testSuite->_cases)
       {
          writer.writeStartElement("testcase");
          writer.writeAttribute("name", testCase->_name);
@@ -159,7 +169,7 @@ void XmlJoiner::outputXmlFooter(QXmlStreamWriter &writer)
 
 TestSuite::~TestSuite()
 {
-   foreach (auto testCase, _cases)
+   foreach(auto testCase, _cases)
    {
       delete testCase;
    }
