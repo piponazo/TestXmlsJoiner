@@ -11,6 +11,8 @@
 #include <gtest/gtest.h>
 #include <argtable2.h>
 
+using namespace TestsXml;
+
 extern struct arg_str *argPath;
 
 class TestXmlJoiner : public ::testing::Test

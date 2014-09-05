@@ -12,9 +12,12 @@
 #include <QDebug>
 #include <stdexcept>
 
+namespace TestsXml
+{
+
 XmlJoiner::~XmlJoiner()
 {
-   foreach(auto testSuite, _suites)
+   for(auto & testSuite: _suites)
    {
       delete testSuite;
    }
@@ -123,7 +126,7 @@ void XmlJoiner::outputXmlHeader(QXmlStreamWriter &writer)
 
    // Gather information about all the tests
    int tests=0, failures=0, errors=0;
-   foreach(const auto testSuite, _suites)
+   for(const auto &testSuite: _suites)
    {
       tests += testSuite->_tests;
       failures += testSuite->_failures;
@@ -138,7 +141,7 @@ void XmlJoiner::outputXmlHeader(QXmlStreamWriter &writer)
 
 void XmlJoiner::outputXmlElements(QXmlStreamWriter &writer)
 {
-   foreach(const auto testSuite, _suites)
+   for(const auto &testSuite: _suites)
    {
       writer.writeStartElement("testsuite");
       writer.writeAttribute("name", testSuite->_name);
@@ -165,11 +168,4 @@ void XmlJoiner::outputXmlFooter(QXmlStreamWriter &writer)
    writer.writeEndDocument();
 }
 
-
-TestSuite::~TestSuite()
-{
-   foreach(auto testCase, _cases)
-   {
-      delete testCase;
-   }
 }

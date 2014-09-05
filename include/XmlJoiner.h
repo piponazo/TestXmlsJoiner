@@ -3,43 +3,23 @@
  *    @author  Luis Díaz Más (LDM), piponazo@gmail.com
  *
  *  @internal
- *    Created  08/07/2014
+ *    Created  07/08/2014
  */
+
+#include "Types.h"
 
 #include <QStringList>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
-#include <QList>
 #include <QMap>
 
-struct TestCase
+#include <vector>
+
+namespace TestsXml
 {
-   TestCase(const QString name, const QString valid) : _name(name), _valid(valid) {}
-
-   QString  _name;
-   QString  _valid;
-};
-
-struct TestSuite
-{
-   TestSuite(const QString name, const int tests, const int failures, const int errors) :
-       _name(name)
-      ,_tests(tests)
-      ,_failures(failures)
-      ,_errors(errors)
-   {}
-
-   ~TestSuite();
-
-   QString _name;
-   quint32 _tests = 0;
-   quint32 _failures = 0;
-   quint32 _errors = 0;
-   QList<TestCase *> _cases;
-};
 
 /*!
- * \brief This class let you join the xml output of GTests and QTests and a unique file.
+ * \brief This class let you join the several XML test reports obtained with different framework.
  *
  * There are some differencies between the two formats. In gtest we have and additional element
  * called testsuites that gather statistics of all the gtest. We can reject this data and extract
@@ -70,6 +50,7 @@ private:
    QStringList _files;
 
    QMap<QString, QString>           _totalProperties; // tests, failures, errors
-   QList<TestSuite *>               _suites;
+   std::vector<TestSuite *>               _suites;
 }; // -----  end of class XmlJoiner  -----
 
+}
