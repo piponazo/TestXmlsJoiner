@@ -50,7 +50,7 @@ private:
    QStringList _files;
 
    QMap<QString, QString>           _totalProperties; // tests, failures, errors
-   std::vector<TestSuite *>               _suites;
+   std::vector<TestSuite *>         _suites;
 }; // -----  end of class XmlJoiner  -----
 
 }

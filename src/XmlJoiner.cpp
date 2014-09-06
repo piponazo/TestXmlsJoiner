@@ -26,9 +26,18 @@ XmlJoiner::~XmlJoiner()
 void XmlJoiner::processFolder(const QString folder)
 {
    QDir xmlDir(folder);
+   if (xmlDir.exists() == false)
+      throw std::logic_error("processFolder - folder doesn't exist");
+
    QStringList extensions("*.xml");
-   foreach(const QString &file, xmlDir.entryList(extensions,
-           QDir::Files | QDir::NoDotAndDotDot, QDir::Name))
+   QStringList xmlFiles = xmlDir.entryList(extensions,
+                                           QDir::Files | QDir::NoDotAndDotDot,
+                                           QDir::Name);
+
+   if (xmlFiles.empty())
+      throw std::logic_error("processFolder - folder doesn't contain xml files");
+
+   foreach(const QString &file, xmlFiles)
    {
       processFile(xmlDir.absoluteFilePath(file));
    }
@@ -40,11 +49,10 @@ void XmlJoiner::processFile(const QString absolutePath)
 
    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
    {
-      throw std::runtime_error("Error opening file " + absolutePath.toStdString());
+      throw std::logic_error("ProcessFile - Error opening file " + absolutePath.toStdString());
    }
 
    QXmlStreamReader xml(&file);
-
    while(!xml.atEnd() && !xml.hasError())
    {
       QXmlStreamReader::TokenType token = xml.readNext();
@@ -64,7 +72,8 @@ void XmlJoiner::processFile(const QString absolutePath)
 
    if(xml.hasError())
    {
-      throw std::runtime_error("Error parsing the xml file " + absolutePath.toStdString());
+      throw std::logic_error("ProcessFile - Error parsing the xml file " +
+                             absolutePath.toStdString());
    }
 }
 
@@ -83,17 +92,11 @@ void XmlJoiner::processTestCaseAttrs(const QXmlStreamAttributes attrs)
 
    if(attrs.hasAttribute("status"))  // google tests case
    {
-      if(attrs.value("status") != "run")
-      {
-         valid = attrs.value("status").toString();
-      }
+      /// \todo do specific stuff with google test xml file
    }
    else if(attrs.hasAttribute("result"))  // qt tests case
    {
-      if(attrs.value("result") != "pass")
-      {
-         valid = attrs.value("result").toString();
-      }
+      /// \todo do specific stuff with qtest xml file
    }
 
    TestSuite *suite = _suites.back();
@@ -104,13 +107,8 @@ void XmlJoiner::processTestCaseAttrs(const QXmlStreamAttributes attrs)
 void XmlJoiner::writeOutput(const QString pathFile)
 {
    QFile outFile(pathFile);
-
    if(!outFile.open(QIODevice::WriteOnly | QIODevice::Text))
-   {
-      qDebug() << "Error opening output file for writing";
-      /// \todo throw exception and delete debug message
-      exit(-1);
-   }
+      throw std::logic_error("writeOutput - Invalid output file for writting the combined XML");
 
    QXmlStreamWriter xmlOut(&outFile);
    outputXmlHeader(xmlOut);
