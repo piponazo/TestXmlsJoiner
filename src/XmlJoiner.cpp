@@ -67,6 +67,9 @@ void XmlJoiner::processFile(const QString absolutePath)
          {
             processTestCaseAttrs(xml.attributes());
          }
+         else if (xml.name() == "failure")
+         {
+         }
       }
    }
 
