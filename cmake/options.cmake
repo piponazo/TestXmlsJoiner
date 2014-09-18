@@ -24,13 +24,14 @@ OPTION(ENABLE_COVERAGE_XML "Perform code coverage in XML for jenkins integration
 
 OPTION(BUILD_SHARED_LIBS   "Build shared libraries"                                    ON)
 OPTION(BUILD_TESTS         "Build unitary & integration tests with gtest"              OFF)
+OPTION(BUILD_UTILS         "Build utilities & applications"                            OFF)
 
-OPTION(INSTALL_DOC          "Install documentation in system"                          OFF)
-OPTION(DOXY_COVERAGE        "Generate text file with the doxygen coverage"             OFF)
-OPTION(USE_MATHJAX          "Generate doc-formulas via mathjax instead of latex"       OFF)
-OPTION(USE_DOT              "Diagram generation with graphviz"                         ON)
-OPTION(USE_LATEX            "Build latex documentation"                                OFF)
-OPTION(USE_CHM              "Build CHM Windows documentation"                          OFF)
+OPTION(INSTALL_DOC         "Install documentation in system"                           OFF)
+OPTION(DOXY_COVERAGE       "Generate text file with the doxygen coverage"              OFF)
+OPTION(USE_MATHJAX         "Generate doc-formulas via mathjax instead of latex"        OFF)
+OPTION(USE_DOT             "Diagram generation with graphviz"                          ON)
+OPTION(USE_LATEX           "Build latex documentation"                                 OFF)
+OPTION(USE_CHM             "Build CHM Windows documentation"                           OFF)
 
 # ----------------------------------------------------------------------------
 #   Code coverage

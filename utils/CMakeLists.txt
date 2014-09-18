@@ -1,19 +1,6 @@
-IF(BUILD_TESTS)
+if(BUILD_UTILS)
 
-   IF(NOT GTEST_FOUND)
-      MESSAGE(WARNING "GTest is not installed in your system so tests can't be compiled")
-   ELSE()
+   add_executable(xml_join xml_join.cpp)
+   target_link_libraries(xml_join ${PROJECT_NAME})
 
-   INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
-   INCLUDE_DIRECTORIES(SYSTEM ${GTEST_INCLUDE_DIRS})
-   LINK_LIBRARIES(${ARGTABLE} ${GTEST_BOTH_LIBRARIES} ${PROJECT_NAME})
-
-   ADD_EXECUTABLE(tests tests_main.cpp)
-
-   ADD_CUSTOM_TARGET(tests_xml COMMAND tests --xml --gtest_output=xml
-      WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-   ENDIF()
-
-ENDIF()
-
-
+endif()

@@ -12,7 +12,7 @@ INCLUDE(cmake/buildFiles.cmake REQUIRED)
 
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(tests)
-#ADD_SUBDIRECTORY(utils)
+ADD_SUBDIRECTORY(utils)
 
 INCLUDE(cmake/printInfo.cmake REQUIRED)
 
