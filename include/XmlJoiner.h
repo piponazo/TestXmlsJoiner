@@ -42,6 +42,8 @@ public:
 private:
    void processTestSuiteAttrs(const QXmlStreamAttributes attrs);
    void processTestCaseAttrs(const QXmlStreamAttributes attrs);
+   void processTestFailureAttrs(const QXmlStreamAttributes attrs);
+   void processTestCDataAttrs(const QStringRef text);
 
    void outputXmlHeader(QXmlStreamWriter &writer);
    void outputXmlElements(QXmlStreamWriter &writer);

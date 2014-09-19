@@ -18,6 +18,8 @@ struct TestCase
 
    QString  _name;
    QString  _valid;
+   QString  _failureMsg;
+   QString  _cDATA;
 };
 
 struct TestSuite

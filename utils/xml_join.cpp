@@ -15,6 +15,9 @@
 #include <argtable2.h>
 #include <iostream>
 
+using namespace TestsXml;
+using namespace TestsXml;
+
 // #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ##################
 static void readArguments(int argc, char **argv);
 

@@ -69,6 +69,10 @@ void XmlJoiner::processFile(const QString absolutePath)
          }
          else if (xml.name() == "failure")
          {
+            processTestFailureAttrs(xml.attributes());
+            xml.readNext();
+            Q_ASSERT(xml.isCDATA());
+            processTestCDataAttrs(xml.text());
          }
       }
    }
@@ -86,6 +90,9 @@ void XmlJoiner::processTestSuiteAttrs(const QXmlStreamAttributes attrs)
                                      attrs.value("tests").toString().toInt(),
                                      attrs.value("failures").toString().toInt(),
                                      attrs.value("errors").toString().toInt());
+
+   /// \todo set "disabled" field
+   /// \todo set "time" field
    _suites.push_back(suite);
 }
 
@@ -105,6 +112,18 @@ void XmlJoiner::processTestCaseAttrs(const QXmlStreamAttributes attrs)
    TestSuite *suite = _suites.back();
    TestCase *testCase = new TestCase(attrs.value("name").toString(), valid);
    suite->_cases.push_back(testCase);
+}
+
+void XmlJoiner::processTestFailureAttrs(const QXmlStreamAttributes attrs)
+{
+   TestCase *testCase = _suites.back()->_cases.back();
+   testCase->_failureMsg = attrs.value("message").toString();
+}
+
+void XmlJoiner::processTestCDataAttrs(const QStringRef text)
+{
+   TestCase *testCase = _suites.back()->_cases.back();
+   testCase->_cDATA.append(text);
 }
 
 void XmlJoiner::writeOutput(const QString pathFile)
@@ -150,12 +169,22 @@ void XmlJoiner::outputXmlElements(QXmlStreamWriter &writer)
       writer.writeAttribute("failures", QString::number(testSuite->_failures));
       writer.writeAttribute("errors", QString::number(testSuite->_errors));
 
-      foreach(const auto testCase, testSuite->_cases)
+      for(const auto &testCase: testSuite->_cases)
       {
          writer.writeStartElement("testcase");
          writer.writeAttribute("name", testCase->_name);
          writer.writeAttribute("status", testCase->_valid);
          writer.writeAttribute("classname", testSuite->_name);
+
+         if (testCase->_failureMsg.isEmpty() == false)
+         {
+            writer.writeStartElement("failure");
+            writer.writeAttribute("message", testCase->_failureMsg);
+            writer.writeAttribute("type", "");
+            writer.writeCDATA(testCase->_cDATA);
+            writer.writeEndElement();
+         }
+
          writer.writeEndElement();
       }
 
